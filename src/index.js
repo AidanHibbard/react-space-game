@@ -1,3 +1,4 @@
+import SmallFighter from './models/SmallFighter.gltf'
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -22,19 +23,8 @@ function LoadingState() {
     )
 }
 function Fighter() {
-    const { nodes } = useLoader(GLTFLoader, 'models/SmallFighter.gltf')
-    return (
-        <group>
-            <mesh visible geometry={nodes.Default.geometry}>
-                <meshStandardMaterial
-                    attatch='material'
-                    color='white'
-                    roughness={0.3}
-                    metalness={0.3}
-                />
-            </mesh>
-        </group>
-    )
+    const gltf = useLoader(GLTFLoader, SmallFighter)
+    return <primitive object={gltf.scene} position={[0, 0, 0]} />
 }
 
 
