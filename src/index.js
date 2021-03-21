@@ -43,6 +43,7 @@ const CameraControls = () => {
         gl: { domElement },
     } = useThree();
     const controls = useRef()
+    // I have no idea if state is neccessary or not, Ive tested without it and the controls work but Im leaving it in
     useFrame((state) => controls.current.update())
     return <orbitControls ref={controls} args={[camera, domElement]} />;
 }
@@ -60,5 +61,6 @@ function App() {
         </Canvas>
     )
 }
+// Binding app to root element
 const root = document.getElementById('root');
 ReactDOM.render(<App />, root);
