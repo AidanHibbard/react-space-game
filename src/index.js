@@ -1,4 +1,3 @@
-import * as THREE from 'three'
 import SmallFighter from './models/SmallFighter.gltf'
 import background from './images/background.png'
 import React, { Suspense, useRef, useState } from 'react';
@@ -13,7 +12,7 @@ import {
 } from 'react-three-fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { MeshBasicMaterial } from 'three';
+import { MeshBasicMaterial, TextureLoader } from 'three';
 
 //Floor height
 const FloorHeight = -100;
@@ -65,7 +64,7 @@ function Fighter() {
 // Ground layer (space)
 function Floor() {
     const floor = useRef()
-    const texture = useLoader(THREE.TextureLoader, background)
+    const texture = useLoader(TextureLoader, background)
     return (
         <mesh 
             visible
