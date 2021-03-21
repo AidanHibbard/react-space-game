@@ -22,6 +22,7 @@ function LoadingState() {
         </mesh>
     )
 }
+// Ship model
 function Fighter() {
     const gltf = useLoader(GLTFLoader, SmallFighter)
     return <primitive object={gltf.scene} position={[0, 0, 0]} />
