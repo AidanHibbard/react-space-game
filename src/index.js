@@ -6,7 +6,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 
 // Loading state
-function Loading() {
+function LoadingState() {
     return (
         <mesh visible position={[0, 0, 0]} rotation={[0, 0, 0]}>
             <sphereGeometry attach='geometry' args={[1, 16, 16]} />
@@ -45,7 +45,7 @@ function App() {
     return (
         <Canvas style={{ background: "#171717" }}>
             <directionalLight intensity={0.5} />
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<LoadingState />}>
                 <Fighter />
             </Suspense>
         </Canvas>
