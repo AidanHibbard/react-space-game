@@ -12,6 +12,11 @@ import {
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
+//Floor height
+const FloorHeight = -100;
+
+
+
 extend({ OrbitControls })
 
 // Loading state
@@ -35,6 +40,28 @@ function Fighter() {
     const ship = useLoader(GLTFLoader, SmallFighter)
     return <primitive object={ship.scene} position={[0, 0, 0]} />
 }
+// Ground layer (space)
+
+function Floor() {
+    const floor = useRef()
+    return (
+        <mesh 
+            visible
+            position={[0, FloorHeight, 0]}
+            rotation={[-Math.PI / 2, 0, 0]}
+            ref={floor}
+        >
+            <planeBufferGeometry attach="geometry" args={[5000, 5000, 128, 128]} />
+            <meshStandardMaterial
+                attach="material"
+                color="white"
+                roughness={1}
+                metalness={0}
+                wireframe
+            />
+        </mesh>
+    )
+}
 
 // Camera Controls
 const CameraControls = () => {
@@ -53,12 +80,13 @@ const CameraControls = () => {
 // APP
 function App() {
     return (
-        <Canvas style={{ background: "#000000" }}>
+        <Canvas style={{ background: "#ffffff" }}>
             <CameraControls />
             <directionalLight intensity={0.5} />
             <Suspense fallback={<LoadingState />}>
                 <Fighter />
             </Suspense>
+            <Floor />
         </Canvas>
     )
 }
