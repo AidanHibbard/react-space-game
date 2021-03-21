@@ -1,17 +1,55 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { Canvas, useLoader } from 'react-three-fiber'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// Loading state
+function Loading() {
+    return (
+        <mesh visible position={[0, 0, 0]} rotation={[0, 0, 0]}>
+            <sphereGeometry attach='geometry' args={[1, 16, 16]} />
+            <meshStandardMaterial
+                attach='material'
+                color='white'
+                transparent
+                opacity={0.5}
+                roughness={1}
+                metalness={0}
+            />
+        </mesh>
+    )
+}
+function Fighter() {
+    const { nodes } = useLoader(GLTFLoader, 'models/SmallFighter.gltf')
+    return (
+        <group>
+            <mesh visible geometry={nodes.Default.geometry}>
+                <meshStandardMaterial
+                    attatch='material'
+                    color='white'
+                    roughness={0.3}
+                    metalness={0.3}
+                />
+            </mesh>
+        </group>
+    )
+}
+
+
+
+
+// APP
+function App() {
+    return (
+        <Canvas style={{ background: "#171717" }}>
+            <directionalLight intensity={0.5} />
+            <Suspense fallback={<Loading />}>
+                <Fighter />
+            </Suspense>
+        </Canvas>
+    )
+}
+const root = document.getElementById('root');
+ReactDOM.render(<App />, root);
