@@ -45,7 +45,8 @@ const CameraControls = () => {
     const controls = useRef()
     // I have no idea if state is neccessary or not, Ive tested without it and the controls work but Im leaving it in
     useFrame((state) => controls.current.update())
-    return <orbitControls ref={controls} args={[camera, domElement]} maxAzimuthAngle={Math.PI / 4} maxPolarAngle={Math.PI} minAzimuthAngle={-Math.PI / 4} minPolarAngle={0}/>;
+    // maxAzimuthAngle={Math.PI / 4} maxPolarAngle={Math.PI} minAzimuthAngle={-Math.PI / 4} minPolarAngle={0}
+    return <orbitControls ref={controls} args={[camera, domElement]}/>;
 }
 
 
