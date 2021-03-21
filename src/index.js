@@ -1,10 +1,18 @@
 import SmallFighter from './models/SmallFighter.gltf'
-import React, { Suspense } from 'react';
+import React, { Suspense, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { Canvas, useLoader } from 'react-three-fiber'
+import { 
+    Canvas, 
+    useLoader, 
+    extend,
+    useFrame,
+    useThree
+} from 'react-three-fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
+extend({ OrbitControls })
 
 // Loading state
 function LoadingState() {
@@ -24,17 +32,27 @@ function LoadingState() {
 }
 // Ship model
 function Fighter() {
-    const gltf = useLoader(GLTFLoader, SmallFighter)
-    return <primitive object={gltf.scene} position={[0, 0, 0]} />
+    const ship = useLoader(GLTFLoader, SmallFighter)
+    return <primitive object={ship.scene} position={[0, 0, 0]} />
 }
 
-
+// Camera Controls
+const CameraControls = () => {
+    const {
+        camera,
+        gl: { domElement },
+    } = useThree();
+    const controls = useRef()
+    useFrame((state) => controls.current.update())
+    return <orbitControls ref={controls} args={[camera, domElement]} />;
+}
 
 
 // APP
 function App() {
     return (
         <Canvas style={{ background: "#171717" }}>
+            <CameraControls />
             <directionalLight intensity={0.5} />
             <Suspense fallback={<LoadingState />}>
                 <Fighter />
